@@ -35,6 +35,7 @@ static bool isAdPlacement2Requested = false;
     [self requestAnAdWithPlacementId:kVungleTestPlacementID02];
 }
 
+//Initializing Vungle SDK when user taps on InitializeSDK
 - (void) initializeSDK{
     VungleSDK* sdk = [VungleSDK sharedSDK];
     NSError *error = nil;
@@ -43,6 +44,7 @@ static bool isAdPlacement2Requested = false;
     [sdk setLoggingEnabled:NO];
 }
 
+// Requesting to load an ad when user requests for one from UI
 -(void) requestAnAdWithPlacementId:(NSString *)plid{
     if (![[VungleSDK sharedSDK] isInitialized]) {
         [self popUpWithMessage:[NSString stringWithFormat:@"Please initialize SDK if you have not done it already. Please wait for SDK to be initialized! You should see a pop up when it is ready!"]];
@@ -56,6 +58,7 @@ static bool isAdPlacement2Requested = false;
     }
 }
 
+//Play the ad when it is ready and requested by the user
 -(void) playAd:(NSString *)plid{
     NSDictionary *options = @{VunglePlayAdOptionKeyOrientations: @(UIInterfaceOrientationMaskLandscape),
                               VunglePlayAdOptionKeyUser: @"userGameID",
@@ -64,10 +67,7 @@ static bool isAdPlacement2Requested = false;
                               VunglePlayAdOptionKeyIncentivizedAlertContinueButtonText : @"Keep Watching",
                               VunglePlayAdOptionKeyIncentivizedAlertTitleText : @"Careful!"};
     
-    // Pass in dict of options, play ad
     NSError *error;
-    
-    
     [[VungleSDK sharedSDK] playAd:self options:options placementID:plid error:&error];
     
     if (error) {
@@ -76,7 +76,7 @@ static bool isAdPlacement2Requested = false;
     }
 }
 
-
+//Implementing Callbacks
 #pragma mark callbacks
 - (void)vungleSDKDidInitialize{
     NSLog(@"%s", __PRETTY_FUNCTION__);
